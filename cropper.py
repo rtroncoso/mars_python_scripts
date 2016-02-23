@@ -46,9 +46,8 @@ def resize_and_crop(img, size, fill_white = True):
         x_offset = int(crop_width // 2) - int(src_width // 2) # 0
         y_offset = 0 # int(float(src_height - crop_height) // 3)
 
+    # Calculates image offset and creates the cropped image
     offset = (x_offset, y_offset)
-    print(offset, crop_width, crop_height, src_width, src_height)
-
     img = img.convert("RGBA")
     new = Image.new(img.mode, (crop_width, crop_height), "white")
     new.paste(img, offset)

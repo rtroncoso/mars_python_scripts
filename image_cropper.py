@@ -6,8 +6,16 @@ from cropper import resize_and_crop
 
 __pretend__ = False
 extensions = ['.jpg', '.jpeg', '.png']
+allowed_names = ['package', 'box']
 sizes = {
     'package': {
+        'hdpi': (512, 'png'),
+        'mdpi': (256, 'png'),
+        'ldpi': (128, 'png'),
+        'thumbnail': (100, 'png'),
+    },
+
+    'box': {
         'hdpi': (512, 'png'),
         'mdpi': (256, 'png'),
         'ldpi': (128, 'png'),
@@ -31,7 +39,10 @@ def process_directory(directory, files, out_dir):
     for name in files:
         file_name, file_extension = os.path.splitext(name)
         material_zrep = os.path.basename(directory)
-        if file_extension in extensions and material_zrep.isdigit():
+
+        if ( file_extension in extensions and 
+                file_name in allowed_names and
+                material_zrep.isdigit() ):
             for out_name, out_size, out_extension in generate_file_names(name, material_zrep):
                 out_path = "%s/%s" % (out_dir, material_zrep)
                 input_file = "%s/%s" % (directory, name);
@@ -48,7 +59,7 @@ def process_file(input_file, out_path, out_name, out_size):
         im = resize_and_crop(im, (out_size, out_size))
 
     print("\tProcessing input file: %s to output %s" % (input_file, out_file))
-    if not __pretend__ : im.save(out_file)
+    if not __pretend__ : im.save(out_file, optimize=True)
 
 def main():
     if(len(sys.argv) != 3):
