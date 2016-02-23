@@ -37,8 +37,6 @@ def process_directory(directory, files, out_dir):
                 name, 
                 'package' if valid_zreps[material_zrep] == 1 else 'box'
             )
-            previous_file = name
-
 
 def main():
     if(len(sys.argv) != 3):

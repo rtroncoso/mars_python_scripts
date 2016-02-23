@@ -25,15 +25,15 @@ sizes = {
 
 def generate_file_names(file_name, directory):
     # Yield up original hardcoded image
-    yield 'package-original.png', 'original', 'png'
+    yield "%s-original.png" % file_name, 'original', 'png'
     
     # Process image sizes
-    for package_type, package_formats in sizes.items():
-        for format, options in package_formats.items():
-            size = options[0]
-            extension = options[1]
-            new_file_name = "%s-%s-%sx%s.%s" % (package_type, format, size, size, extension)
-            yield new_file_name, size, extension
+    package_formats = sizes[file_name]
+    for format, options in package_formats.items():
+        size = options[0]
+        extension = options[1]
+        new_file_name = "%s-%s-%sx%s.%s" % (file_name, format, size, size, extension)
+        yield new_file_name, size, extension
 
 def process_directory(directory, files, out_dir):
     for name in files:
@@ -43,7 +43,7 @@ def process_directory(directory, files, out_dir):
         if ( file_extension in extensions and 
                 file_name in allowed_names and
                 material_zrep.isdigit() ):
-            for out_name, out_size, out_extension in generate_file_names(name, material_zrep):
+            for out_name, out_size, out_extension in generate_file_names(file_name, material_zrep):
                 out_path = "%s/%s" % (out_dir, material_zrep)
                 input_file = "%s/%s" % (directory, name);
                 process_file(input_file, out_path, out_name, out_size)
