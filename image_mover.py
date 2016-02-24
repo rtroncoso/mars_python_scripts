@@ -35,9 +35,15 @@ def process_directory(directory, files, out_dir):
             print("ZRep Number: %s, times: %d, previous dashes: %d, current dashes: %d" %
                 (material_zrep, valid_zreps[material_zrep], 
                 dashes_counter[material_zrep], len(splitted_name)))
+
             if ( len(splitted_name) < dashes_counter[material_zrep] or
                  dashes_counter[material_zrep] == 0 ):
                 image_type = 'package'
+            elif ( len(splitted_name) < dashes_counter[material_zrep] and
+                   valid_zreps[material_zrep] == 2 ):
+                image_type = 'package'
+                copyfile("%s/%s/package.png" % (out_dir, material_zrep), 
+                         "%s/%s/box.png" % (out_dir, material_zrep))
             else:
                 image_type = 'box'
 
