@@ -39,13 +39,13 @@ def process_directory(directory, files, out_dir):
             if ( len(splitted_name) < dashes_counter[material_zrep] or
                  dashes_counter[material_zrep] == 0 ):
                 image_type = 'package'
-            elif ( len(splitted_name) < dashes_counter[material_zrep] and
-                   valid_zreps[material_zrep] == 2 ):
-                image_type = 'package'
-                copyfile("%s/%s/package.png" % (out_dir, material_zrep), 
-                         "%s/%s/box.png" % (out_dir, material_zrep))
             else:
                 image_type = 'box'
+
+            if ( len(splitted_name) < dashes_counter[material_zrep] and
+                  valid_zreps[material_zrep] == 2 ) :
+                copyfile("%s/%s/package.png" % (out_dir, material_zrep), 
+                         "%s/%s/box.png" % (out_dir, material_zrep))
 
             out_path = "%s/%s" % (out_dir, material_zrep)
             input_file = "%s/%s" % (directory, name)
