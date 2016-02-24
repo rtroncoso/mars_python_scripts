@@ -26,6 +26,7 @@ def process_directory(directory, files, out_dir):
 
         if ( file_extension in extensions and 
                   material_zrep.isdigit() and 
+                  len(material_zrep) == 6 and
                   file_name[:2] != '._' ) :
             valid_zreps[material_zrep] += 1
 
