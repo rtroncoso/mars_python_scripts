@@ -30,14 +30,16 @@ def process_directory(directory, files, out_dir):
                   file_name[:2] != '._' ) :
             valid_zreps[material_zrep] += 1
 
+            if(valid_zreps[material_zrep] == 1):
+                image_type = 'package'
+            elif(valid_zreps[material_zrep] == 1):
+                image_type = 'box'
+            else:
+                image_type = 'other-' + valid_zreps[material_zrep]
+
             out_path = "%s/%s" % (out_dir, material_zrep)
             input_file = "%s/%s" % (directory, name)
-            process_file (
-                input_file, 
-                out_path, 
-                name, 
-                'package' if valid_zreps[material_zrep] == 1 else 'box'
-            )
+            process_file(input_file, out_path, name, image_type)
 
 def main():
     if(len(sys.argv) != 3):
