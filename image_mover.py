@@ -32,7 +32,8 @@ def process_directory(directory, files, out_dir):
                   file_name[:2] != '._' ) :
             valid_zreps[material_zrep] += 1
 
-            if(dashes_counter[material_zrep] < len(splitted_name)):
+            if ( len(splitted_name) < dashes_counter[material_zrep] or
+                  dashes_counter[material_zrep] == 0 ):
                 image_type = 'package'
             else:
                 image_type = 'box'
