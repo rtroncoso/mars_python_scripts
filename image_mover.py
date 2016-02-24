@@ -6,7 +6,7 @@ from PIL import Image
 from collections import defaultdict
 
 __pretend__ = False
-extensions = ['.jpg', '.jpeg', '.png']
+allowed_extensions = ['.jpg', '.jpeg', '.png']
 
 def process_file(input_file, out_path, name, image_type):
     if not os.path.isdir(out_path):
@@ -25,15 +25,18 @@ def process_directory(directory, files, out_dir):
         splitted_name = file_name.split("_")
         material_zrep = splitted_name[-1]
 
-        if ( file_extension in extensions and 
+        if ( file_extension in allowed_extensions and 
                   material_zrep.isdigit() and 
                   len(material_zrep) == 6 and
-                  valid_zreps[material_zrep] < 2 and
+                  valid_zreps[material_zrep] < 1 and
                   file_name[:2] != '._' ) :
             valid_zreps[material_zrep] += 1
 
+            print("ZRep Number: %s, times: %d, previous dashes: %d, current dashes: %d" %
+                (material_zrep, valid_zreps[material_zrep], 
+                dashes_counter[material_zrep], len(splitted_name)))
             if ( len(splitted_name) < dashes_counter[material_zrep] or
-                  dashes_counter[material_zrep] == 0 ):
+                 dashes_counter[material_zrep] == 0 ):
                 image_type = 'package'
             else:
                 image_type = 'box'
