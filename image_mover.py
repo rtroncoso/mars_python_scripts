@@ -18,6 +18,7 @@ def process_file(input_file, out_path, name, image_type):
 
 def process_directory(directory, files, out_dir):
     valid_zreps = defaultdict(int)
+    dashes_counter = defaultdict(int)
 
     for name in files:
         file_name, file_extension = os.path.splitext(name)
@@ -27,12 +28,13 @@ def process_directory(directory, files, out_dir):
         if ( file_extension in extensions and 
                   material_zrep.isdigit() and 
                   len(material_zrep) == 6 and
+                  valid_zreps[material_zrep] < 2 and
                   file_name[:2] != '._' ) :
             valid_zreps[material_zrep] += 1
 
-            if(valid_zreps[material_zrep] == 1):
+            if(dashes_counter[material_zrep] < len(splitted_name)):
                 image_type = 'package'
-            elif(valid_zreps[material_zrep] == 1):
+            elif(dashes_counter[material_zrep] > len(splitted_name)):
                 image_type = 'box'
             else:
                 image_type = 'other-%d' % valid_zreps[material_zrep]
@@ -40,6 +42,7 @@ def process_directory(directory, files, out_dir):
             out_path = "%s/%s" % (out_dir, material_zrep)
             input_file = "%s/%s" % (directory, name)
             process_file(input_file, out_path, name, image_type)
+            dashes_counter[material_zrep] = len(splitted_name)
 
 def main():
     if(len(sys.argv) != 3):
