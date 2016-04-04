@@ -7,6 +7,7 @@ from collections import defaultdict
 
 __pretend__ = False
 allowed_extensions = ['.jpg', '.jpeg', '.png']
+amount_adobe = 0
 
 def process_file(input_file, out_path, name):
     if not os.path.isdir(out_path):
@@ -27,7 +28,7 @@ def all_images_counter(directory, files):
 
             if not os.path.isdir(out_path):
                 os.makedirs(out_path)
-            
+
             input_file = "%s/%s" % (directory, name)
             process_file(input_file, out_path, name)
 
@@ -52,14 +53,9 @@ def adobe_files(directory, files):
 
         if ( file_extension in ['.psd', '.eps'] and 
                   file_name[:2] != '._' ) :
-            print("[ADOBE]: Filename: %s, Extension: %s" % (file_name, file_extension))
-            out_path = "adobe_images"
-
-            if not os.path.isdir(out_path):
-                os.makedirs(out_path)
-
-            input_file = "%s/%s" % (directory, name)
-            process_file(input_file, out_path, name)
+            amount_adobe++
+            print("[ADOBE]: Filename: %s, Extension: %s, Number: %d" % 
+                (file_name, file_extension, amount_adobe))
 
 def main():
     if(len(sys.argv) != 2):
@@ -73,6 +69,8 @@ def main():
         all_images_counter(root, files)
         repeated_images(root, files)
         adobe_files(root, files)
+
+    printf("Amount of Adobe files: %d", amount_adobe)
 
 if __name__ == "__main__":
     main()
