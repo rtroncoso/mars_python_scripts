@@ -7,7 +7,6 @@ from collections import defaultdict
 
 __pretend__ = False
 allowed_extensions = ['.jpg', '.jpeg', '.png']
-amount_adobe = 0
 
 def process_file(input_file, out_path, name):
     if not os.path.isdir(out_path):
@@ -47,7 +46,7 @@ def repeated_images(directory, files):
             input_file = "%s/%s" % (directory, name)
             process_file(input_file, out_path, name)
 
-def adobe_files(directory, files):
+def adobe_files(directory, files, amount_adobe):
     for name in files:
         file_name, file_extension = os.path.splitext(name)
 
@@ -63,12 +62,13 @@ def main():
         exit(1)
 
     src_dir = sys.argv[1]
+    amount_adobe = 0
 
     for root, dirs, files in os.walk(src_dir):
         print("Found directory: %s" % root)
         all_images_counter(root, files)
         repeated_images(root, files)
-        adobe_files(root, files)
+        adobe_files(root, files, amount_adobe)
 
     printf("Amount of Adobe files: %d", amount_adobe)
 
