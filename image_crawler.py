@@ -53,7 +53,7 @@ def adobe_files(directory, files):
 
         if ( file_extension in ['.psd', '.eps'] and 
                   file_name[:2] != '._' ) :
-            amount_adobe++
+            amount_adobe += 1
             print("[ADOBE]: Filename: %s, Extension: %s, Number: %d" % 
                 (file_name, file_extension, amount_adobe))
 
