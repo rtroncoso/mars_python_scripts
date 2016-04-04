@@ -52,9 +52,9 @@ def adobe_files(directory, files, amount_adobe):
 
         if ( file_extension in ['.psd', '.eps'] and 
                   file_name[:2] != '._' ) :
-            amount_adobe += 1
+            amount_adobe[0] += 1
             print("[ADOBE]: Filename: %s, Extension: %s, Number: %d" % 
-                (file_name, file_extension, amount_adobe))
+                (file_name, file_extension, amount_adobe[0]))
 
 def main():
     if(len(sys.argv) != 2):
@@ -62,7 +62,7 @@ def main():
         exit(1)
 
     src_dir = sys.argv[1]
-    amount_adobe = 0
+    amount_adobe = [0]
 
     for root, dirs, files in os.walk(src_dir):
         print("Found directory: %s" % root)
@@ -70,7 +70,7 @@ def main():
         repeated_images(root, files)
         adobe_files(root, files, amount_adobe)
 
-    printf("Amount of Adobe files: %d", amount_adobe)
+    print("Amount of Adobe files: %d", amount_adobe)
 
 if __name__ == "__main__":
     main()
