@@ -24,6 +24,10 @@ def all_images_counter(directory, files):
                   file_name[:2] != '._' ) :
             print("[ALLIMG]: Filename: %s, Extension: %s" % (file_name, file_extension))
             out_path = "all_images"
+
+            if not os.path.isdir(out_path):
+                os.makedirs(out_path)
+            
             input_file = "%s/%s" % (directory, name)
             process_file(input_file, out_path, name)
 
@@ -35,6 +39,10 @@ def repeated_images(directory, files):
                   file_name[:2] == '._' ) :
             print("[REPEATED]: Filename: %s, Extension: %s" % (file_name, file_extension))
             out_path = "repeated_images"
+
+            if not os.path.isdir(out_path):
+                os.makedirs(out_path)
+
             input_file = "%s/%s" % (directory, name)
             process_file(input_file, out_path, name)
 
@@ -46,6 +54,10 @@ def adobe_files(directory, files):
                   file_name[:2] != '._' ) :
             print("[ADOBE]: Filename: %s, Extension: %s" % (file_name, file_extension))
             out_path = "adobe_images"
+
+            if not os.path.isdir(out_path):
+                os.makedirs(out_path)
+
             input_file = "%s/%s" % (directory, name)
             process_file(input_file, out_path, name)
 
@@ -55,10 +67,6 @@ def main():
         exit(1)
 
     src_dir = sys.argv[1]
-    out_dir = sys.argv[2]
-
-    if not os.path.isdir(out_dir):
-        os.makedirs(out_dir)
 
     for root, dirs, files in os.walk(src_dir):
         print("Found directory: %s" % root)
