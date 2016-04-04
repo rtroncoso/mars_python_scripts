@@ -8,11 +8,11 @@ from collections import defaultdict
 __pretend__ = False
 allowed_extensions = ['.jpg', '.jpeg', '.png']
 
-def process_file(input_file, out_path, name, image_type):
+def process_file(input_file, out_path, name):
     if not os.path.isdir(out_path):
         os.makedirs(out_path)
 
-    output_file = "%s/%s.png" % (out_path, image_type)
+    output_file = "%s/%s" % (out_path, name)
     print("Copying file: %s to %s" % (input_file, output_file))
     if not __pretend__ : copyfile(input_file, output_file)
 
@@ -26,7 +26,7 @@ def all_images_counter(directory, files):
             print("[ALLIMG]: Filename: %s, Extension: %s" % (file_name, file_extension))
             out_path = "all_images"
             input_file = "%s/%s" % (directory, name)
-            process_file(input_file, out_path, name, image_type)
+            process_file(input_file, out_path, name)
 
 def main():
     if(len(sys.argv) != 3):
