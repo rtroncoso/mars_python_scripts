@@ -56,6 +56,13 @@ def adobe_files(directory, files, amount_adobe):
             print("[ADOBE]: Filename: %s, Extension: %s, Number: %d" % 
                 (file_name, file_extension, amount_adobe[0]))
 
+def total_files(directory, files, amount_total):
+    for name in files:
+        file_name, file_extension = os.path.splitext(name)
+        amount_total[0] += 1
+        print("[TOTAL]: Filename: %s, Extension: %s, Number: %d" % 
+            (file_name, file_extension, amount_total[0]))
+
 def main():
     if(len(sys.argv) != 2):
         print("Usage: %s <input directory>" % (sys.argv[0]))
@@ -63,14 +70,17 @@ def main():
 
     src_dir = sys.argv[1]
     amount_adobe = [0]
+    amount_total = [0]
 
     for root, dirs, files in os.walk(src_dir):
         print("Found directory: %s" % root)
         all_images_counter(root, files)
         repeated_images(root, files)
         adobe_files(root, files, amount_adobe)
+        total_files(root, files, amount_total)
 
-    print("Amount of Adobe files: %d", amount_adobe)
+    print("All files found in the drive: %d", amount_total[0])
+    print("Amount of Adobe files: %d", amount_adobe[0])
 
 if __name__ == "__main__":
     main()
